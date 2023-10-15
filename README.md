@@ -3,4 +3,5 @@
 - apple
 - orange
 - starfruit
-- and fresh fruit 
+- and fresh fruit
+- pineapple
