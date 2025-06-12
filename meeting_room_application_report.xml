@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_report_meeting_room_application" model="ir.actions.report">
+        <field name="name">Meeting/Training Room Application Form</field>
+        <field name="model">hledan.meeting.room.application</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">properties_management.report_meeting_room_application</field>
+        <field name="report_file">properties_management.report_meeting_room_application</field>
+        <field name="print_report_name">'Meeting/Training Room Application Form-%s' % (object.name)</field>
+        <field name="binding_model_id" ref="properties_management.hledan_meeting_room_application"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_meeting_room_application">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <style>
+                        .security-table th {
+                            background-color: #e9ecef;
+                        }
+                        .page-break {
+                            page-break-before: always;
+                        }
+                        .company-footer {
+                            margin-top: 80px;
+                            text-align: center;
+                            font-size: 12px;
+                        }
+                        .company-name {
+                            color: red;
+                            font-weight: bold;
+                        }
+                        table.main-table {
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+                        table.main-table th {
+                            background-color: #f2f2f2;
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                            text-align: center;
+                        }
+                        table.main-table td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                        }
+                    </style>
+                    <div class="page">
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <h2 style="font-weight: bold; font-size: 24px;">Meeting/Training Room Application Form</h2>
+                            </div>
+                        </div>
+
+                        <!-- Invoice Info Section -->
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Applicant Details:</h4><br/>
+
+                                <!-- Applicant Name -->
+                                <strong>Name:</strong>
+                                <t t-if="o.application_type == 'internal'">
+                                    <span t-field="o.employee_id.name"/><br/>
+                                </t>
+                                <t t-if="o.application_type == 'external'">
+                                    <span t-field="o.partner_id.name"/><br/>
+                                 </t>
+
+                                <!-- Department or Organization -->
+                                <strong>Department/Organization:</strong>
+                                <t t-if="o.application_type == 'internal'">
+                                 <span t-field="o.department_id.name"/><br/>
+                                </t>
+                                 <t t-if="o.application_type == 'external'">
+                                     <span t-field="o.organization_id.name"/><br/>
+                                 </t>
+<!--                                &lt;!&ndash; Email &ndash;&gt;-->
+<!--                                 <strong>Email:</strong>-->
+<!--                                <span t-field="o.email"/><br/>-->
+
+<!--                                &lt;!&ndash; Contact Number &ndash;&gt;-->
+<!--                                <strong>Contact Number:</strong>-->
+<!--                                <span t-field="o.contact_number"/><br/>-->
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Booking Details:</h4><br/>
+                                <strong>Date of Required:</strong>
+                                <span t-field="o.datetime"/><br/>
+                                <strong>Serial Number:</strong>
+                                <span t-field="o.name"/>
+
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Purpose of Booking:</h4><br/>
+                                <strong>Booking Type:</strong>
+                                <span t-field="o.booking_type"/><br/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Room Information:</h4><br/>
+                                <strong>Room No:</strong>
+                                <span t-field="o.room_id"/><br/>
+                                <strong>Number of Attendees:</strong>
+                                <span t-field="o.attendee"/>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Preferred Setup:</h4><br/>
+                                 <ul class="ps-3">
+                                     <t t-if="o.board"><li>Projector</li></t>
+                                     <t t-if="o.shape"><li>Whiteboard</li></t>
+                                     <t t-if="o.classroom"><li>High-Speed Internet</li></t>
+                                     <t t-if="o.other_setup">
+                                    <li>Other: <t t-esc="o.other_purpose"/></li>
+                                    </t>
+                                </ul><br/>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Equipment and Facilities Required:</h4><br/>
+                                 <ul class="ps-3">
+                                     <t t-if="o.projector"><li>Projector</li></t>
+                                     <t t-if="o.whiteboard"><li>Whiteboard</li></t>
+                                     <t t-if="o.internet"><li>High-Speed Internet</li></t>
+                                     <t t-if="o.other_facilities">
+                                    <li>Other: <t t-esc="o.other_purpose"/></li>
+                                    </t>
+                                </ul><br/>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Room Charges:</h4><br/>
+                                <strong>Room Rates:</strong>
+                                <span t-field="o.room_rate"/><br/>
+                                <strong>Additional Charges:</strong>
+                                <span t-field="o.additional_charges"/><br/>
+                            </div>
+                        </div>
+                         <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 class="text-dark fw-bold">Payment Requests or Comments:</h4><br/>
+                                <strong>Payment Info:</strong>
+                                <span t-field="o.payment_info"/><br/>
+                                <strong>Additional Requests:</strong>
+                                <span t-field="o.additional_requests"/><br/>
+                            </div>
+                        </div>
+                    </div>
+
+                        <!-- Signature Section in table footer -->
+                        <div style="margin-top: 260px;">
+                            <table class="table" style="border: none; width: 100%;">
+                                <tfoot>
+                                    <tr class="border-bottom">
+                                        <td class="text-center" style="border: none; width: 25%;">
+                                            <div style="border-top: 1px dashed #000; width: 80%; margin: 0 auto; padding-top: 5px;">
+                                                <span style="color: #4472C4;">Customer Signature</span><br/>
+                                                <span style="color: #4472C4; mt-4">Name:</span><br/>
+                                                <span style="color: #4472C4;">Date:</span><br/>
+                                            </div>
+                                        </td>
+                                        <td class="text-center" style="border: none; width: 25%;">
+                                            <div style="border-top: 1px dashed #000; width: 80%; margin: 0 auto; padding-top: 5px;">
+                                                <span style="color: #4472C4;">Hledan Centre's Representative Signature</span><br/>
+                                                <span style="color: #4472C4; mt-4">Name:</span><br/>
+                                                <span style="color: #4472C4;">Date:</span><br/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+
+                            <!-- Company Footer -->
+<!--                            <div class="company-footer">-->
+<!--                                <div class="company-name">-->
+<!--                                    YANGON AERODROME COMPANY LIMITED-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    Address: Terminal-3(Domestic Terminal),Yangon International Airport,<br/>-->
+<!--                                    Mingaladon Township, Yangon, Myanmar.#11021<br/>-->
+<!--                                    Tel:+95-9670888(Ext.-7345) Fax: +95196705999, Email-yacl@yangon.aero-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

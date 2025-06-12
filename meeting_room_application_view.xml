@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Meeting Room Booking Form View -->
+    <record id="view_hledan_meeting_room_application_form" model="ir.ui.view">
+        <field name="name">hledan.meeting.room.application.form</field>
+        <field name="model">hledan.meeting.room.application</field>
+        <field name="arch" type="xml">
+            <form string="Meeting / Training Room Application Form">
+                <header>
+                        <!-- Tentative: Set only if in amendment or draft -->
+                        <button name="action_tentative" string="Tentative" type="object" class="oe_highlight" invisible="state != 'amendment'"/>
+
+                        <!-- Confirmed: Show when in tentative state -->
+                        <button name="action_confirm" string="Confirmed" type="object" class="oe_highlight" invisible="state !='tentative'"/>
+                        invisible="state != 'tentative'" groups="properties_management.group_hledan_booking_buh"/>
+
+                        <!-- Amendment: Show when already confirmed -->
+                         <button name="action_amendment" string="Amendment" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+
+                        <!-- Cancelled: Show when tentative or confirmed -->
+                        <button name="action_cancel" string="Cancelled" type="object" invisible="state not in ['tentative','confirmed']"/>
+
+                        <!-- Set to Draft (Tentative again): Show only when cancelled -->
+                         <button name="action_set_to_draft" string="Set to Draft" type="object" invisible="state != 'cancelled'"/>
+
+                        <!-- Finished: Show only when confirmed or amendment -->
+                        <button name="action_finished" string="Finished" type="object" invisible="state not in ['confirmed', 'amendment']"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="tentative,confirmed,amendment,cancelled,finished"/>
+                </header>
+
+                <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+
+                            </h1>
+                        </div>
+                    <group>
+
+                    <group string="Applicant Details:">
+                        <field name="application_type" />
+                        <field name="employee_id" invisible="application_type != 'internal'"/>
+                        <field name="partner_id" invisible="application_type != 'external'"/>
+                        <field name="department_id" invisible="application_type != 'internal'"/>
+                        <field name="organization_id" invisible="application_type != 'external'"/>
+                    </group>
+
+                    <group string="Booking Details:">
+                        <field name="datetime"/>
+                        <field name="qr_code" widget="image" class="oe_avatar"/>
+                    </group>
+
+                    <group string="Purpose of Booking">
+                        <field name="booking_type"/>
+                        <field name="other_purpose" invisible="booking_type !='other'"/>
+                    </group>
+
+                    <group string="Room Info">
+                        <field name="room_id"/>
+                        <field name="attendee"/>
+                    </group>
+
+                    <group string="Preferred Setup">
+                        <field name="board" widget="boolean_button"/>
+
+                        <field name="shape" widget="boolean_button"/>
+
+                        <field name="classroom" widget="boolean_button"/>
+
+                        <field name="other_setup" widget="boolean_button"/>
+                        <field name="other_purpose" invisible="not other_setup"/>
+
+                    </group>
+
+                    <group string="Equipment and Facilities Required">
+<!--                        <label for="projector">Projector</label>-->
+                        <field name="projector" widget="boolean_button"/>
+
+<!--                        <label for="whiteboard">Whiteboard</label>-->
+                        <field name="whiteboard" widget="boolean_button"/>
+
+<!--                        <label for="internet">High-Speed Internet</label>-->
+                        <field name="internet" widget="boolean_button"/>
+
+<!--                        <label for="other_facilities">Other</label>-->
+                        <field name="other_facilities" widget="boolean_button"/>
+                        <field name="other_purpose" invisible="not other_facilities"/>
+                    </group>
+                    <group string="Room Charges">
+                        <field name="currency_id"/>
+                        <field name="room_rate"/>
+                        <field name="additional_charges"/>
+                    </group>
+
+                    <group string="Payment Requests or Comments">
+                        <field name="payment_info"/>
+                        <field name="additional_requests"/>
+                    </group>
+
+                  </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Meeting Room Action -->
+    <record id="action_hledan_meeting_room_application" model="ir.actions.act_window">
+        <field name="name">Meeting / Training Room Application Form </field>
+        <field name="res_model">hledan.meeting.room.application</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Application Form
+            </p>
+        </field>
+    </record>
+</odoo>

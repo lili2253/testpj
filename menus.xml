@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_hledan_booking_root"
+              name="Properties Management"
+              web_icon="properties_management,static/description/properties_management.png"
+              sequence="50"
+              groups="properties_management.group_hledan_booking_user"/>
+
+    <!-- Event Booking Menu -->
+<!--    <menuitem id="menu_hledan_event_booking"-->
+<!--              name="Event Booking"-->
+<!--              parent="menu_hledan_booking_root"-->
+<!--              sequence="10"/>-->
+
+    <menuitem id="menu_hledan_event_booking_list"
+              name="Event Bookings"
+              parent="menu_hledan_booking_root"
+              action="action_hledan_event_booking"
+              sequence="1"/>
+
+    <!-- Meeting Room Booking Menu -->
+<!--    <menuitem id="menu_hledan_meeting_room_booking"-->
+<!--              name="Meeting Room Booking"-->
+<!--              parent="menu_hledan_booking_root"-->
+<!--              sequence="20"/>-->
+
+    <menuitem id="menu_hledan_meeting_room_booking_list"
+              name="Meeting Room Bookings"
+              parent="menu_hledan_booking_root"
+              action="action_hledan_meeting_room_booking"
+              sequence="2"/>
+
+    <menuitem
+        id="menu_hledan_meeting_room_application_list"
+        name="Meeting Room Application"
+        parent="menu_hledan_booking_root"
+        action="action_hledan_meeting_room_application"
+        sequence="3"
+    />
+
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_hledan_booking_config"
+              name="Configuration"
+              parent="menu_hledan_booking_root"
+              sequence="100"/>
+
+    <menuitem id="menu_hledan_booking_companies"
+              name="Contacts"
+              parent="menu_hledan_booking_config"
+              action="action_res_partner_event"
+              sequence="1"/>
+
+    <menuitem id="menu_hledan_booking_area_list"
+              name="Booking Areas"
+              parent="menu_hledan_booking_config"
+              action="action_hledan_booking_area"
+              sequence="2"/>
+
+    <menuitem id="menu_hledan_meeting_room_list"
+              name="Meeting Rooms"
+              parent="menu_hledan_booking_config"
+              action="action_hledan_meeting_room"
+              sequence="3"/>
+
+    <menuitem id="menu_monthly_income_report"
+              name="Reporting"
+              parent="menu_hledan_booking_root"
+              action="action_hledan_event_booking"
+              sequence="4"/>
+
+    <menuitem id="menu_promotion_area_income_report"
+              name="Promotion Area Income Report"
+              parent="menu_monthly_income_report"
+              action="action_promotion_area_income_report"
+              sequence="1"/>
+
+     <menuitem id="menu_meeting_room_application_report"
+              name="Meeting / Training Room Application Form Report"
+              parent="menu_monthly_income_report"
+              action="action_report_meeting_room_application"
+              sequence="1"/>
+</odoo>
